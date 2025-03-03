@@ -1,0 +1,31 @@
+services:
+  service-name:
+    container_name: container-name
+    image: image-name:latest
+    restart: unless-stopped
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - TZ=America/Recife
+      - DB_HOST=${DB_HOST}
+      - DB_NAME=${DB_NAME}
+      - DB_USERNAME=${DB_USERNAME}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - UPLOAD_PATH=${UPLOAD_PATH}
+      - LOG_DIR=${LOG_DIR}
+    ports:
+      - "8080:8080"
+    volumes:
+      - service-name-tests-files:/files/
+      - service-name-tests-logs:/logs/
+    networks:
+      - service-name-tests-network
+
+volumes:
+  service-name-tests-files:
+  service-name-tests-logs:
+
+networks:
+  service-name-tests-network:
+    driver: bridge
